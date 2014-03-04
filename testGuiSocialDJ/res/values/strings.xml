@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">testGuiSocialDJ</string>
+    <string name="action_settings">Settings</string>
+    <string name="Controls">Controls</string>
+    <string name="Playlist">Playlist</string>
+    <string name="Connect">Connect</string>
+    <string name="Browse">Browse</string>
+    <string name="Info">Info</string>
+    <string name="title_activity_queue">QueueActivity</string>
+
+</resources>
