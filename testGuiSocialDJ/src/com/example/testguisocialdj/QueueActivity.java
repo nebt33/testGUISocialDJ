@@ -23,9 +23,17 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.text.format.Formatter;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
+import android.widget.Toast;
 
 public class QueueActivity extends Activity {
 
@@ -33,6 +41,8 @@ public class QueueActivity extends Activity {
 	private static int standardPort = 8888;
 	//standard port for not active ip address on network
 	private static String nonActiveIp = "0.0.0.0";
+	//Adapter
+	private static SimpleAdapter simpleAdpt;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -43,11 +53,58 @@ public class QueueActivity extends Activity {
 			   
 		ListView list = (ListView)findViewById(R.id.listView);
 		
-		SimpleAdapter simpleAdpt = new SimpleAdapter(this, activeServers, android.R.layout.simple_list_item_1, new String[] {"host"}, new int[] {android.R.id.text1});
+		simpleAdpt = new SimpleAdapter(this, activeServers, android.R.layout.simple_list_item_1, new String[] {"host"}, new int[] {android.R.id.text1});
 		
 		list.setAdapter(simpleAdpt);
 
+		//register contextmenu
+		registerForContextMenu(list);	
 	}
+	
+	/**
+	 * Context Menu when user long clicks on a listview item
+	 */
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v,
+			ContextMenuInfo menuInfo) {
+
+		super.onCreateContextMenu(menu, v, menuInfo);
+		AdapterContextMenuInfo aInfo = (AdapterContextMenuInfo) menuInfo;
+
+		// We know that each row in the adapter is a Map
+		HashMap map =  (HashMap) simpleAdpt.getItem(aInfo.position);
+
+
+		menu.setHeaderTitle("Options for Server " + map.get("host"));
+		menu.add(1, 1, 1, "Connect");
+		menu.add(1, 2, 2, "Disconnect");
+	}
+	
+	/**
+	 * Method that will control what happens when an item is clicked in the 
+	 * contextMenu
+	 */
+	@Override
+	public boolean onContextItemSelected(MenuItem item) {
+		int itemId = item.getItemId();
+		
+		//connect
+		if(itemId == 1) {
+			AdapterContextMenuInfo aInfo = (AdapterContextMenuInfo) item.getMenuInfo();
+			HashMap map =  (HashMap) simpleAdpt.getItem(aInfo.position);
+			try {
+				Socket socket = new Socket();
+				socket.connect(new InetSocketAddress(map.get("host").toString(), standardPort), 200);
+
+			} catch (Exception ex) {return false;}
+		}
+		//disconnect
+		else {
+			
+		}
+		return true;
+	}
+
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
