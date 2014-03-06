@@ -9,5 +9,6 @@
     <string name="Browse">Browse</string>
     <string name="Info">Info</string>
     <string name="title_activity_queue">QueueActivity</string>
+    <string name="Servers">Servers</string>
 
 </resources>
