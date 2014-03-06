@@ -25,7 +25,7 @@ public class MainActivity extends Activity {
 	/** Called when the user clicks the controls button*/
 	public void createConnect(View view){
 		//Does something in response to the button being clicked
-		Intent intent = new Intent(this, QueueActivity.class);
+		Intent intent = new Intent(this, ConnectActivity.class);
 		startActivity(intent);
 	}
 
