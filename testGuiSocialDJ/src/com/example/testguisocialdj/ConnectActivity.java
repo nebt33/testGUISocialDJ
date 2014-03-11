@@ -236,10 +236,9 @@ public class ConnectActivity extends Activity {
 			holder.radio.setChecked(ip.isSelected());
 			
 			//checks the current server connected to when reopening the connect screen
-			if(!(settings.getString("currentlyConnected", nonActiveIp).equals(nonActiveIp))){
-				if(holder.textViewIP.getText().toString().trim().equals(settings.getString("currentlyConnected", nonActiveIp)))
-						holder.radio.setChecked(true);
-			}
+			if(!(settings.getString("currentlyConnected", nonActiveIp).equals(nonActiveIp)))
+				if(holder.textViewIP.getText().toString().trim().equals(settings.getString("currentlyConnected", nonActiveIp))) 
+					holder.radio.setChecked(true);
 
 			return convertView;
 
