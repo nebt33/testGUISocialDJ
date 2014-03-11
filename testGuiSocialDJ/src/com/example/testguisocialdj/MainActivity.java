@@ -3,6 +3,7 @@ package com.example.testguisocialdj;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
@@ -27,6 +28,15 @@ public class MainActivity extends Activity {
 		//Does something in response to the button being clicked
 		Intent intent = new Intent(this, ConnectActivity.class);
 		startActivity(intent);
+	}
+	
+	@Override
+	public void finish() {
+		//deleting stored memory
+		SharedPreferences settings = getSharedPreferences("connected", MODE_PRIVATE);
+		SharedPreferences.Editor editor = settings.edit();
+		editor.remove("currentlyConnected");
+		editor.commit();
 	}
 
 }
